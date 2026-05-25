@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detection AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="hero">
+
+        <h1>📰 Fake News Detection AI</h1>
+
+        <p>
+            Machine Learning Powered News Verification System
+        </p>
+
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+
+            <form action="/predict" method="POST">
+
+                <textarea
+                    name="news"
+                    placeholder="Paste a news article or headline here..."
+                    required></textarea>
+
+                <button type="submit">
+                    Analyze News
+                </button>
+
+            </form>
+
+        </div>
+
+        {% if prediction %}
+
+        <div class="prediction-card
+            {% if prediction == 'REAL' %}
+            real
+            {% else %}
+            fake
+            {% endif %}
+        ">
+
+            <h2>
+                Prediction: {{ prediction }}
+            </h2>
+
+            <p>
+                Confidence Score:
+                {{ confidence }}%
+            </p>
+
+            <br>
+
+            <p>
+                {{ prediction_message }}
+            </p>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3>{{ accuracy }}%</h3>
+                <p>Model Accuracy</p>
+            </div>
+
+            <div class="stat-box">
+                <h3>{{ confidence }}%</h3>
+                <p>Prediction Confidence</p>
+            </div>
+
+            <div class="stat-box">
+                <h3>{{ similarity_score }}%</h3>
+                <p>Article Similarity</p>
+            </div>
+
+        </div>
+
+        <h2 class="section-title">
+            Closest Matching Article
+        </h2>
+
+        <div class="news-card">
+
+            {{ matched_article }}
+
+        </div>
+
+        <h2 class="section-title">
+            Related News Articles
+        </h2>
+
+        <div class="related-container">
+
+            {% for article in related_news %}
+
+            <div class="news-card">
+
+                {{ article }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <footer>
+
+        <p>
+            Fake News Detection System 
+           
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
